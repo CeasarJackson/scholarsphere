@@ -6,6 +6,13 @@ class DownloadsController < ApplicationController
     include ExternalDownloadBehavior
   end
 
+  def show
+    start = Time.now
+    result = super
+    timing_logger.log(action: 'Show Download', start_time: start)
+    result
+  end
+
   prepend_before_action only: [:show] do
     handle_legacy_url_prefix { |new_id| redirect_to main_app.download_path(new_id), status: :moved_permanently }
   end
@@ -19,8 +26,20 @@ class DownloadsController < ApplicationController
     end
 
     def load_file
-      return super if params['file'] == 'thumbnail' || asset.is_a?(FileSet)
-      zip_service.call
+      start = Time.now
+      result = if params['file'] == 'thumbnail' || asset.is_a?(FileSet)
+        start_file = Time.now
+        super_result = super
+        timing_logger.log(action: 'Show Download: load file: super', start_time: start_file)
+        super_result
+      else
+        start_zip = Time.now
+        zip = zip_service.call
+        timing_logger.log(action: 'Show Download: load file: zip', start_time: start_zip)
+        zip
+      end
+      timing_logger.log(action: 'Show Download: load file', start_time: start)
+      result
     end
 
     def work_directory
