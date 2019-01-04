@@ -40,9 +40,11 @@ describe 'Batch management of works', type: :feature do
       expect(page).to have_content 'Changes will be applied to the following'
 
       # Update standard fields
-      batch_edit_fields.each do |field|
+      batch_edit_fields[3,batch_edit_fields.count-3].each do |field|
         fill_in_batch_edit_field(field, with: "Updated batch #{field}")
       end
+
+      fill_in_three_batch_edit_fields(batch_edit_fields[0],batch_edit_fields[1],batch_edit_fields[2])
 
       # Update creators
       click_link 'expand_link_creator'
