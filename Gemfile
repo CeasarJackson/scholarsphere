@@ -10,7 +10,8 @@ gem 'mysql2', '~> 0.4.10' unless ENV['CI']
 # Hydra gems
 gem 'active-fedora', '~> 11.5'
 gem 'blacklight_advanced_search', '~> 6.0'
-gem 'sufia', '7.4.1'
+gem 'curation_concerns', path: 'gems/curation_concerns'
+gem 'sufia', path: 'gems/sufia'
 
 # Use patched version of mail. Remove this once 2.6.6 is officially out
 gem 'mail', '= 2.6.6.rc1'

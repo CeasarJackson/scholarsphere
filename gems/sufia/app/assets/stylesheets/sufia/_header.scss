@@ -1,0 +1,16 @@
+#search-form-header {
+  margin-top: $search-bar-margin-top;
+}
+
+#masthead {
+  z-index: $zindex-navbar + 1;
+}
+
+.navbar + .navbar,
+.navbar + .image-masthead {
+  margin-top: -1 * $navbar-margin-bottom;
+}
+
+.searchbar-right {
+  margin-right: 0;
+}
